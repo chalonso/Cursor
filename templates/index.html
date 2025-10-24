@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestor de Tareas</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f8f9fa; margin: 30px; }
+        h1 { color: #03271f; }
+        form { margin-bottom: 20px; }
+        input[type=text] { padding: 8px; width: 250px; }
+        button { padding: 8px 12px; margin-left: 5px; }
+        li { margin-bottom: 5px; }
+        .hecho { text-decoration: line-through; color: rgb(77, 76, 76); }
+    </style>
+</head>
+<body>
+    <h1>Gestor de Tareas</h1>
+    
+    <form action="/agregar" method="POST">
+        <input type="text" name="tarea" placeholder="Ingresar nueva tarea" required>
+        <button type="submit">Agregar.</button>
+    </form>
+
+    <ul>
+        {% for tarea in tareas %}
+            <li class="{{ 'hecho' if tarea.hecho else '' }}">
+                {{ tarea.texto }}
+                {% if not tarea.hecho %}
+                    <a href="{{ url_for('completar', id=tarea.id) }}">✅ Completar</a>
+                {% endif %}
+            </li>
+        {% else %}
+            <li>No hay tareas todavía</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
